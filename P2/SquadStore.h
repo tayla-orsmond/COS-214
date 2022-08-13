@@ -5,6 +5,8 @@ using namespace std;
 //Tayla Orsmond u21467456
 class SquadStore{
     public:
+    SquadStore();
+    ~SquadStore();
     void store(SquadMemento *);
     SquadMemento * restore();
     void clear();

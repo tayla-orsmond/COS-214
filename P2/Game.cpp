@@ -20,6 +20,33 @@ Game::~Game(){
         delete *e;
     }
 }
+
+GameState * Game::save(){
+    return new GameState(this->player, this->clones, this->barracks, this->enemies, this->lives, this->diff, this->lvl, this->win, this->quit);
+}
+void Game::restore(){
+    GameState * g = storage.restore();
+    if(g == nullptr){return;}
+    if(player != nullptr){
+        delete player;
+        player = nullptr;
+    }
+    vector<SquadMember *>::iterator i;
+    for(i = clones.begin(); i != clones.end(); i++){
+        delete *i;
+    }
+    vector<Enemy *>::iterator e;
+    for(e = enemies.begin(); e != enemies.end(); e++){
+        delete *e;
+    }
+    lives = g->lives;
+    diff = g->diff;
+    lvl = g->lvl;
+    win = g->win;
+    quit = g->quit;
+    barracks = g->barracks;
+    this->play();
+}
 void Game::initialize(){
     std::cout<<setw(60)<<setfill('*')<<"\n";
     std::cout<<"\t\tWelcome to "<<GAMENAME<<"\n";
@@ -57,7 +84,7 @@ void Game::initialize(){
     lives = 5 - diff;
     clones.push_back(player->clone());
     diff *=2;
-
+    lvl = 0;
     cout<<"\t|\tLives: ";
     for(int i = 0; i < lives; i++){
         cout<<"<3 ";
@@ -87,9 +114,9 @@ void Game::play(){
     quit = false, win = false;
     string c = "";
     int choice = 0, undoCount = 0;
-    for(int i = 1; i <= diff && lives >= 0 && !quit; i++)
+    for(int i = lvl; i <= diff && lives >= 0 && !quit; i++)
     {
-        std::cout<<"\n"<<setw(30)<<setfill('-')<<" LEVEL "<<i<<" "<<setw(30)<<setfill('-')<<"\n";
+        std::cout<<"\n"<<setw(30)<<setfill('-')<<" LEVEL "<<i+1<<" "<<setw(30)<<setfill('-')<<"\n";
         std::cout<<"A wild "<<enemies.front()->getName()<<" appears!\n"
         <<"ATK: "<<enemies.front()->getATK()
         <<" which has a DMG of: "<<enemies.front()->getDMG()
@@ -109,7 +136,8 @@ void Game::play(){
             <<"\t1 -> Heal\n"
             <<"\t2 -> Train\n"
             <<"\t3 -> Fight!\n"
-            <<"\t4 -> Quit.\n";
+            <<"\t4 -> Quit.\n"
+            <<"\t5 -> Save.\n";
             getline(std::cin, c);
             stringstream ss;
             ss<<c;
@@ -138,6 +166,7 @@ void Game::play(){
                         delete deadEnemy;
                         deadEnemy = nullptr;
                         enemies.erase(enemies.begin());
+                        lvl = i;
                         barracks->store(player->save(choice));
                     }
                     else if(player->getHP() <= 0){
@@ -188,8 +217,14 @@ void Game::play(){
                 }
                     break;
                 case 4: {
-                    std::cout<<"Quitting game...";
+                    std::cout<<"Quitting game...\n";
                     quit = true;
+                }
+                    break;
+                case 5:{
+                    std::cout<<"Saving game...\n";
+                    storage.store(this->save());
+                    i--;
                 }
                     break;
                 default: {
@@ -197,20 +232,45 @@ void Game::play(){
                     i--;
                 }
             }
-        }while(!quit && (choice < 0 || choice > 4));
+        }while(!quit && (choice < 0 || choice > 5));
     }
 
 }
 
-void Game::result(){
+bool Game::result(){
     if(enemies.size() == 0 && (player->getHP() > 0 || lives > 0)){
         std::cout<<"\n\n\t\tCongrats! You won Adventure Island!\n";
         win = true;
-    }
-    else if(quit == true){
-        std::cout<<"\n\n\t\tSee You next time!\n";
+        return false;
     }
     else{
-        std::cout<<"\n\n\t\tYou lost... Better luck next time!\n";
+        std::cout<<"\n\n\t\tYou lost... Better luck next time!\n"
+        <<"Would You like to restore from a previous save?\n";
+        char restore;
+        string c;
+        do{
+            std::cout<<"\n[Y/N]\n";
+            getline(cin, c);
+            stringstream sss;
+            sss<<c;
+            sss>>restore;
+            restore = toupper(restore);
+            if(restore != 'Y' && restore != 'N'){
+                std::cout<<"\nThis is a really simple question. I don't know why you're having such a hard time with this.\n";
+            }
+        }while(restore != 'Y' && restore != 'N');
+        if(restore == 'Y'){
+            // GameState * s = storage.restore();
+            // if(s != nullptr){
+                return true;
+            // }
+            // else{
+            //     std::cout<<"No games saved!\n";
+            // }
+        }
+        return false;
     }
 }
+
+
+

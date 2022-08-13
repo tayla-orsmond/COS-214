@@ -6,7 +6,10 @@ int main(){
     Game * g = new Game();
     g->initialize();
     g->play();
-    g->result();
+    bool r = g->result();
+    if(r){
+        g->restore();
+    }
     delete g;
     return 0;
 }

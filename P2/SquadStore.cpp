@@ -1,4 +1,10 @@
 #include "SquadStore.h"
+SquadStore::SquadStore(){
+    
+}
+SquadStore::~SquadStore(){
+    //this->clear();
+}
 void SquadStore::store(SquadMemento * player){
     this->squad.push_back(player);
 }

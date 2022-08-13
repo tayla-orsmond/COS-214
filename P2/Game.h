@@ -18,6 +18,7 @@
 #include "Snake.h"
 #include "SnakeFactory.h"
 #include "GameState.h"
+#include "GameStore.h"
 using namespace std;
 
 class Game{
@@ -26,9 +27,20 @@ class Game{
     ~Game();
     void initialize();
     void play();
-    void result();
-    void save();
-    GameState * restore();
+    bool result();
+    GameState * save();
+    void restore();
+
+    int getlives();
+    int getdiff();
+    int getlvl();
+    bool getwin();
+    bool getquit();
+    SquadMember * getplayer();
+    vector<SquadMember *> getclones();
+    SquadStore * getbarracks();
+    vector<Enemy *> getenemies();
+
 
     private:
     const string GAMENAME = "Adventure Island";
@@ -38,6 +50,7 @@ class Game{
     vector<SquadMember *> clones;
     SquadStore * barracks;
     vector<Enemy *> enemies;
+    GameStore storage;
     static const int SIZE = 7;
     string atks[SIZE] = {"a bow and arrow", "a vicious scream", "another coffee mug", "a boulder", "a plakkie", "sparkles!!!", "a COS semester test"};
     string defs[SIZE] = {"an uno reverse card", "a really big umbrella", "giving you a stern talking to", "a backhand", "a Barricade", "a plastic bubble that 'looks like a disco ball'"};
