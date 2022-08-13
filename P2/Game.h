@@ -4,7 +4,9 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <cctype>
 #include "SquadMember.h"
+#include "SquadStore.h"
 #include "Enemy.h"
 #include "EnemyFactory.h"
 #include "Cannibal.h"
@@ -20,20 +22,22 @@ using namespace std;
 
 class Game{
     public:
-    Game(string playername, int difficulty);
-    bool playGame();
-    void printResult();
-    void saveGame();
-    GameState * restoreGame();
-    void saveMove();
+    Game();
+    ~Game();
+    void initialize();
+    void play();
+    void result();
+    void save();
+    GameState * restore();
 
     private:
     const string GAMENAME = "Adventure Island";
+    int lives, diff, lvl;
+    bool win, quit;
     SquadMember * player;
-    int lives, diff;
-    bool win;
+    vector<SquadMember *> clones;
+    SquadStore * barracks;
     vector<Enemy *> enemies;
-    vector<int> moves;
     static const int SIZE = 7;
     string atks[SIZE] = {"a bow and arrow", "a vicious scream", "another coffee mug", "a boulder", "a plakkie", "sparkles!!!", "a COS semester test"};
     string defs[SIZE] = {"an uno reverse card", "a really big umbrella", "giving you a stern talking to", "a backhand", "a Barricade", "a plastic bubble that 'looks like a disco ball'"};
