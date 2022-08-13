@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "SquadMemento.h"
 using namespace std;
 
 class SquadMember{
@@ -18,9 +19,9 @@ class SquadMember{
         string getDEF();
         void die();
         SquadMember * clone();
+        SquadMemento * save(int);
+        void restore(SquadMemento * );
     private:
-        void save();
-        void reset();
         int HP;
         int DMG;
         string ATK;

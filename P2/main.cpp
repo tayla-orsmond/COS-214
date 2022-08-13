@@ -3,7 +3,9 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <cctype>
 #include "SquadMember.h"
+#include "SquadStore.h"
 #include "Enemy.h"
 #include "EnemyFactory.h"
 #include "Cannibal.h"
@@ -22,50 +24,52 @@ int main(){
     string atks[SIZE] = {"a bow and arrow", "a vicious scream", "another coffee mug", "a boulder", "a plakkie", "sparkles!!!", "a COS semester test"};
     string defs[SIZE] = {"an uno reverse card", "a really big umbrella", "giving you a stern talking to", "a backhand", "a Barricade", "a plastic bubble that 'looks like a disco ball'"};
     
-    cout<<setw(60)<<setfill('*')<<"\n";
-    cout<<"\t\tWelcome to Adventure Island!\n";
-    cout<<setw(60)<<setfill('*')<<"\n";
+    std::cout<<setw(60)<<setfill('*')<<"\n";
+    std::cout<<"\t\tWelcome to Adventure Island!\n";
+    std::cout<<setw(60)<<setfill('*')<<"\n";
     string difficulty ="";
     int diff = 0;
     do{
-        cout<<"\n Choose Your difficulty:\n"
+        std::cout<<"\n Choose Your difficulty:\n"
         <<"\t1 -> Easy\n"
         <<"\t2 -> Meh\n"
         <<"\t3 -> Super Friggin' Hard!\n";
-        getline(cin, difficulty);
+        getline(std::cin, difficulty);
         stringstream ss;
         ss<<difficulty;
         ss>>diff;
         switch(diff){
-            case 1: cout<<"Ah, lookin' for some relaxin' I see...\n";
+            case 1: std::cout<<"Ah, lookin' for some relaxin' I see...\n";
                 break;
-            case 2: cout<<"Ooh, a seasoned player! Exciting!\n";
+            case 2: std::cout<<"Ooh, a seasoned player! Exciting!\n";
                 break;
-            case 3: cout<<"You're lookin' to get ye bones broken aren't ye?\n";
+            case 3: std::cout<<"You're lookin' to get ye bones broken aren't ye?\n";
                 break;
-            default: cout<<"\nWell that wasn't one of the options now, was it? Maybe you should pick 'easy'.\n";
+            default: std::cout<<"\nWell that wasn't one of the options now, was it? Maybe you should pick 'easy'.\n";
         }
     }while(diff < 0 || diff > 3);
 
-    cout<<"\n The adventure begins! What's your name, player?\n";
+    std::cout<<"\nThe adventure begins! What's your name, player?\n";
     string name ="";
-    getline(cin, name);
+    getline(std::cin, name);
     SquadMember * player = new SquadMember(name);
-    cout<<"\nAh of course, welcome "<<name<<".\n\tSetting up your game..."
+    SquadStore * barracks = new SquadStore();
+    std::cout<<"\n\nAh of course, welcome "<<name<<".\n\tSetting up your game..."
     <<"\nYou chose difficulty "<<diff<<" so there will be "<<diff*2<<" levels.\n";
 
     int lives = 5 - diff;
-    //vector<SquadMember *> clones;
-    //clones.push_back(player->clone());
+    vector<SquadMember *> clones;
+    clones.push_back(player->clone());
     diff *=2;
-    cout<<"\tLives: ";
+    cout<<"|\t\tLives: ";
     for(int i = 0; i < lives; i++){
         cout<<"<3 ";
-        //clones.push_back(clones.back()->clone());
+        clones.push_back(clones.back()->clone());
     }
-    cout<<"\n\tHP: "<<player->getHP()<<"\n\tDMG: "<<player->getDMG()
-    <<"\n Your weapon of choice is: "<<player->getATK()
-    <<"\n You choose "<<player->getDEF()<<" to defend yourself.\n";
+    std::cout<<"\n|\t\tHP: "<<player->getHP()<<"\n\t\tDMG: "<<player->getDMG()
+    <<"\n|\tYour weapon of choice is: "<<player->getATK()
+    <<"\n|\tYou choose "<<player->getDEF()<<" to defend yourself.\n";
+
     vector<Enemy *> enemies;
     EnemyFactory * factories[4];
     factories[0] = new JaguarFactory();
@@ -76,115 +80,146 @@ int main(){
         enemies.push_back(factories[rand() % 4]->createEnemy(atks[rand()%SIZE], defs[rand()%SIZE]));
     }
 
-    cout<<setw(60)<<setfill('-')<<"\n";
-    cout<<"\t\tLet the games begin!\n";
-    cout<<setw(60)<<setfill('-')<<"\n";
+    std::cout<<setw(60)<<setfill('-')<<"\n";
+    std::cout<<"\t\tLet the games begin!\n";
+    std::cout<<setw(60)<<setfill('-')<<"\n";
     bool quit = false;
     string c = "";
-    int choice = 0;
-    for(int i = 1; i <= diff && lives > 0 && !quit; i++)
+    int choice = 0, undoCount = 0;
+    for(int i = 1; i <= diff && lives >= 0 && !quit; i++)
     {
-        cout<<setw(30)<<setfill('-')<<" LEVEL "<<i<<" "<<setw(30)<<setfill('-')<<"\n";
-        cout<<"A wild "<<enemies.front()->getName()<<" appears!\n"
+        std::cout<<"\n"<<setw(30)<<setfill('-')<<" LEVEL "<<i<<" "<<setw(30)<<setfill('-')<<"\n";
+        std::cout<<"A wild "<<enemies.front()->getName()<<" appears!\n"
         <<"ATK: "<<enemies.front()->getATK()
         <<" which has a DMG of: "<<enemies.front()->getDMG()
         <<"\nDEF: "<<enemies.front()->getDEF()<<endl;
 
-        cout<<setw(20)<<setfill('_')<<"\n"
-        <<"\t"<<player->getName()<<" stats:\n"
+        std::cout<<setw(40)<<setfill('_')<<"\n"
+        <<player->getName()<<" stats:\n"
         <<"\n\tLives: ";
         for(int i = 0; i < lives; i++){
-            cout<<"<3 ";
+            std::cout<<"<3 ";
         }
-        cout<<"\n\tHP: "<<player->getHP()
+        std::cout<<"\n\tHP: "<<player->getHP()
         <<"\n\tDMG: "<<player->getDMG()<<endl;
 
         do{
-            cout<<"\n Choose An Action:\n"
+            std::cout<<"\nChoose An Action:\n"
             <<"\t1 -> Heal\n"
             <<"\t2 -> Train\n"
             <<"\t3 -> Fight!\n"
             <<"\t4 -> Quit.\n";
-            getline(cin, c);
+            getline(std::cin, c);
             stringstream ss;
             ss<<c;
             ss>>choice;
             switch(choice){
                 case 1: {
-                    cout<<"You decide to take some time to heal up.\n";
+                    std::cout<<"\t\t\tYou decide to take some time to heal up.\n";
                     player->setHP(player->getHP()+(rand() % 4)+1);
                     i--;
+                    barracks->store(player->save(choice));
                 }
                     break;
                 case 2:{
-                    cout<<"You decide to train up your moves\n";
+                    std::cout<<"\t\t\tYou decide to train up your moves\n";
                     player->setDMG(player->getDMG()+(rand() % 4)+1);
                     i--;
+                    barracks->store(player->save(choice));
                 }
                     break;
                 case 3:{
-                    cout<<"Time to FIGHT!!!\n";
+                    std::cout<<"Time to FIGHT!!!\n";
                     enemies.front()->attack(player);
-                    if(enemies.front()->getHP() == 0){
-                        cout<<"\n\tCongrats! Enemy "<<enemies.front()->getName()<<" defeated!\n";
+                    if(enemies.front()->getHP() <= 0){
+                        std::cout<<"\n\nCongrats! Enemy "<<enemies.front()->getName()<<" defeated!\n";
                         Enemy * deadEnemy = enemies.front();
                         delete deadEnemy;
                         deadEnemy = nullptr;
                         enemies.erase(enemies.begin());
+                        barracks->store(player->save(choice));
                     }
-                    else if(player->getHP() == 0){
-                        cout<<"\n\tYou have been defeated!\n"
+                    else if(player->getHP() <= 0){
+                        std::cout<<"\n\nYou have been defeated!\n"
                         <<"You see a bright light coming toward you...";
                         if(lives > 0){
-                            SquadMember * clone = player->clone();
+                            SquadMember * clone = clones.front();
                             delete player;
                             player = clone;
                             clone = nullptr;
-                            //player = clones.front();
-                            //clones.erase(clones.begin());
-                            cout<<"\n\t\t...Someone takes your place!"
-                            <<"\n\t[Used 1 Life!]\n";
+                            clones.erase(clones.begin());
+                            std::cout<<right<<"\n\t\t\t\t...Someone takes your place!\n"
+                            <<"[Used 1 Life!]\n";
                             lives--;
                             i--;
+                            barracks->store(player->save(choice));
                         }
                         else{
-                            cout<<"\n\t\t...There's no more clones to save you!\n";
-                            //undo mech?
-                            quit = true;
+                            std::cout<<"\n\t\t\t\t...There's no more clones to save you!\n"
+                            <<"\nWould you like to undo to your previous move? (You can only do this once!)";
+                            char undo;
+                            do{
+                                std::cout<<"\n[Y/N]\n";
+                                getline(cin, c);
+                                stringstream sss;
+                                sss<<c;
+                                sss>>undo;
+                                undo = toupper(undo);
+                                if(undo != 'Y' && undo != 'N'){
+                                    std::cout<<"\nThis is a really simple question. I don't know why you're having such a hard time with this.\n";
+                                }
+                            }while(undo != 'Y' && undo != 'N');
+                            if(undo == 'N'){quit = true;}
+                            else{
+                                if(barracks->size() > 0 && undoCount == 0){
+                                    player->restore(barracks->restore());
+                                    i--;
+                                    undoCount++;
+                                    continue;
+                                }
+                                else{
+                                    std::cout<<"\nLooks like there's no moves to undo to!\n";
+                                    quit = true;
+                                }
+                            }
                         }
                     }
                 }
                     break;
                 case 4: {
-                    cout<<"Quitting game...";
+                    std::cout<<"Quitting game...";
                     quit = true;
                 }
                     break;
-                default: cout<<"\nYou seriously can't follow instructions, can you? Maybe you should quit the game now (hint: that's option 4).\n";
+                default: {
+                    std::cout<<"\nYou seriously can't follow instructions, can you? Maybe you should quit the game now (hint: that's option 4).\n";
+                    i--;
+                }
             }
         }while(!quit && (choice < 0 || choice > 4));
     }
     if(enemies.size() == 0 && (player->getHP() > 0 || lives > 0)){
-        cout<<"\n\n\tCongrats! You won Adventure Island!\n";
+        std::cout<<"\n\n\t\tCongrats! You won Adventure Island!\n";
+    }
+    else if(quit == true){
+        std::cout<<"\n\n\t\tSee You next time!\n";
     }
     else{
-        cout<<"\n\n\tYou lost... Better luck next time!\n";
+        std::cout<<"\n\n\t\tYou lost... Better luck next time!\n";
     }
 
-    cout<<setw(60)<<setfill('*')<<"\n";
-    cout<<"\t\tThank you for playing!\n";
-    cout<<setw(60)<<setfill('*')<<"\n";
+    std::cout<<setw(60)<<setfill('*')<<"\n";
+    std::cout<<"\t\tThank you for playing!\n";
+    std::cout<<setw(60)<<setfill('*')<<"\n";
 
     if(player != nullptr){
         delete player;
         player = nullptr;
     }
-    // if(clones.size() > 0){
-    //     vector<SquadMember *>::iterator i;
-    //     for(i = clones.begin(); i != clones.end(); i++){
-    //         delete *i;
-    //     }
-    // }
+    vector<SquadMember *>::iterator i;
+    for(i = clones.begin(); i != clones.end(); i++){
+        delete *i;
+    }
     for(int i = 0; i < 4; i++){
         delete factories[i];
     }

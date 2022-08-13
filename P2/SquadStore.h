@@ -5,12 +5,11 @@ using namespace std;
 //Tayla Orsmond u21467456
 class SquadStore{
     public:
-    SquadStore();
-    ~SquadStore();
     void store(SquadMemento *);
     SquadMemento * restore();
     void clear();
     vector<SquadMemento*> load();
+    int size();
     private:
     vector<SquadMemento*> squad;
 };

@@ -57,3 +57,12 @@ void SquadMember::die(){
 SquadMember * SquadMember::clone(){
     return new SquadMember("A Cooler Clone of "+ this->name, this->HP, this->DMG, this->ATK, this->DEF);
 }
+SquadMemento * SquadMember::save(int move){
+    return new SquadMemento(this->HP, this->DMG, this->ATK, this->DEF, move);
+}
+void SquadMember::restore(SquadMemento * save){
+    this->ATK = save->atk;
+    this->DEF = save->def;
+    this->HP = save->hp;
+    this->DMG = save->dmg;
+}
