@@ -8,8 +8,8 @@ SquadMember::SquadMember(string name){
     string atks[SIZE] = {"A Magic Girl wand", "A coffee mug", "A big stick", "Gun", "The power of gaslighting", "A baseball bat"};
     string defs[SIZE] = {"a COS214 tutor", "a shield", "simply saying 'no'", "a rock", "a large friend", "someone's cat"};
     this->name = name;
-    this->HP = rand() % 20 + 2;
-    this->DMG = rand() % 10 + 2;
+    this->HP = rand() % 11 + 1;
+    this->DMG = rand() % 11 + 1;
     this->ATK = atks[rand() % SIZE];
     this->DEF = defs[rand() % SIZE];
     cout<<"[[Squad Member "<< name<<" created.]]\n";
