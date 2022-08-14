@@ -19,32 +19,18 @@ Game::~Game(){
     for(e = enemies.begin(); e != enemies.end(); e++){
         delete *e;
     }
+    if(finalBoss != nullptr){
+        delete finalBoss;
+        finalBoss = nullptr;
+    }
 }
 
-GameState * Game::save(){
-    return new GameState(this->player, this->clones, this->barracks, this->enemies, this->lives, this->diff, this->lvl, this->win, this->quit);
-}
 void Game::restore(){
-    GameState * g = storage.restore();
-    if(g == nullptr){return;}
-    if(player != nullptr){
-        delete player;
-        player = nullptr;
-    }
-    vector<SquadMember *>::iterator i;
-    for(i = clones.begin(); i != clones.end(); i++){
-        delete *i;
-    }
-    vector<Enemy *>::iterator e;
-    for(e = enemies.begin(); e != enemies.end(); e++){
-        delete *e;
-    }
-    lives = g->lives;
-    diff = g->diff;
-    lvl = g->lvl;
-    win = g->win;
-    quit = g->quit;
-    barracks = g->barracks;
+    enemies.back()->restore(finalBoss->retrieve());
+    lives++;
+    lvl = diff;
+    diff++;
+    win = false;
     this->play();
 }
 void Game::initialize(){
@@ -85,14 +71,14 @@ void Game::initialize(){
     clones.push_back(player->clone());
     diff *=2;
     lvl = 0;
-    cout<<"\t|\tLives: ";
+    cout<<" | Lives: ";
     for(int i = 0; i < lives; i++){
         cout<<"<3 ";
         clones.push_back(clones.back()->clone());
     }
-    std::cout<<"\n\t|\tHP: "<<player->getHP()<<"\n\t|\tDMG: "<<player->getDMG()
-    <<"\n\t|\tYour weapon of choice is: "<<player->getATK()
-    <<"\n\t|\tYou choose "<<player->getDEF()<<" to defend yourself.\n";
+    std::cout<<"\n | HP: "<<player->getHP()<<"\n | DMG: "<<player->getDMG()
+    <<"\n | Your weapon of choice is: "<<player->getATK()
+    <<"\n | You choose "<<player->getDEF()<<" to defend yourself.\n";
 
     EnemyFactory * factories[4];
     factories[0] = new JaguarFactory();
@@ -102,6 +88,8 @@ void Game::initialize(){
     for(int i = 0; i < diff; i++){
         enemies.push_back(factories[rand() % 4]->createEnemy(atks[rand()%SIZE], defs[rand()%SIZE]));
     }
+    finalBoss = new EnemyStore();
+    finalBoss->hide(enemies.back()->save());
     for(int i = 0; i < 4; i++){
         delete factories[i];
     }
@@ -162,10 +150,16 @@ void Game::play(){
                     enemies.front()->attack(player);
                     if(enemies.front()->getHP() <= 0){
                         std::cout<<"\n\nCongrats! Enemy "<<enemies.front()->getName()<<" defeated!\n";
-                        Enemy * deadEnemy = enemies.front();
-                        delete deadEnemy;
-                        deadEnemy = nullptr;
-                        enemies.erase(enemies.begin());
+                        if(enemies.size() > 1){
+                            Enemy * deadEnemy = enemies.front();
+                            delete deadEnemy;
+                            deadEnemy = nullptr;
+                            enemies.erase(enemies.begin());
+                        }
+                        else{
+                            win = true;
+                            quit = true;
+                        }
                         lvl = i;
                         barracks->store(player->save(choice));
                     }
@@ -221,31 +215,20 @@ void Game::play(){
                     quit = true;
                 }
                     break;
-                case 5:{
-                    std::cout<<"Saving game...\n";
-                    storage.store(this->save());
-                    i--;
-                }
-                    break;
                 default: {
                     std::cout<<"\nYou seriously can't follow instructions, can you? Maybe you should quit the game now (hint: that's option 4).\n";
                     i--;
                 }
             }
-        }while(!quit && (choice < 0 || choice > 5));
+        }while(!quit && (choice < 0 || choice > 4));
     }
 
 }
 
 bool Game::result(){
-    if(enemies.size() == 0 && (player->getHP() > 0 || lives > 0)){
-        std::cout<<"\n\n\t\tCongrats! You won Adventure Island!\n";
-        win = true;
-        return false;
-    }
-    else{
-        std::cout<<"\n\n\t\tYou lost... Better luck next time!\n"
-        <<"Would You like to restore from a previous save?\n";
+    if(win == true){
+        std::cout<<"\n\n\t\tCongrats! You won Adventure Island!\n"
+        <<"Would You like to restore the last enemy "<<enemies.back()->getName()<<" for one final battle?\n";
         char restore;
         string c;
         do{
@@ -256,20 +239,17 @@ bool Game::result(){
             sss>>restore;
             restore = toupper(restore);
             if(restore != 'Y' && restore != 'N'){
-                std::cout<<"\nThis is a really simple question. I don't know why you're having such a hard time with this.\n";
+                std::cout<<"\nThis is a really simple question. Do you wanna fight or not?\n";
             }
         }while(restore != 'Y' && restore != 'N');
         if(restore == 'Y'){
-            // GameState * s = storage.restore();
-            // if(s != nullptr){
-                return true;
-            // }
-            // else{
-            //     std::cout<<"No games saved!\n";
-            // }
+            return true;
         }
-        return false;
     }
+    else{
+        std::cout<<"\n\n\t\tYou lost... Better luck next time!\n";
+    }
+    return false;
 }
 
 

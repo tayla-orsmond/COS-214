@@ -39,3 +39,12 @@ int Enemy::getHP(){
 int Enemy::getDMG(){
     return this->DMG;
 }
+EnemyMemento * Enemy::save(){
+    return new EnemyMemento(this->HP, this->DMG, this->ATK, this->DEF, this->name);
+}
+void Enemy::restore(EnemyMemento * save){
+    this->ATK = save->atk;
+    this->DEF = save->def;
+    this->HP = save->hp;
+    this->DMG = save->dmg;
+}

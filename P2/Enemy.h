@@ -1,6 +1,7 @@
 #pragma once 
 #include <string>
 #include "SquadMember.h"
+#include "EnemyMemento.h"
 using namespace std;
 
 //Tayla Orsmond u21467456
@@ -19,6 +20,8 @@ class Enemy{
         string getDEF();
         int getHP();
         int getDMG();
+        EnemyMemento * save();
+        void restore(EnemyMemento *);
     protected:
         int HP;
         int DMG;
