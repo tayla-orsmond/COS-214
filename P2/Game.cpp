@@ -215,6 +215,12 @@ void Game::play(){
                     quit = true;
                 }
                     break;
+                case 5: {
+                    std::cout<<"Saving player state...\n";
+                    i--;
+                    barracks->store(player->save(choice));
+                }
+                    break;
                 default: {
                     std::cout<<"\nYou seriously can't follow instructions, can you? Maybe you should quit the game now (hint: that's option 4).\n";
                     i--;
