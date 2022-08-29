@@ -9,4 +9,5 @@
 class Aero : public AeratedChocolate{
     public:
         Aero(int bubbles, std::string manufacturer = "Nestle", double price = 16.99): AeratedChocolate(manufacturer, price, bubbles){}
+        ~Aero(){ std::cout<<"Aero eaten.\n"; }
 };

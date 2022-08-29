@@ -12,8 +12,8 @@
 class Chocolate : public Confectionery{
     public:
         Chocolate(std::string, double, bool);//manufacturer, price, slab
-        ~Chocolate();
-        std::string getDescription(bool);//prints parent + if is slab or not
+        virtual ~Chocolate();
+        std::string getDescription();//prints parent + if is slab or not
         //getters and setters
         bool getSlab();
         void setSlab(bool);

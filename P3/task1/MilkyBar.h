@@ -8,5 +8,6 @@
 
 class MilkyBar : public Chocolate{
     public:
-        MilkyBar(std::string manufacturer, bool slab, double price = 33.99): Chocolate(manufacturer, price, slab){}
+        MilkyBar(bool slab, std::string manufacturer="Nestle", double price = 33.99): Chocolate(manufacturer, price, slab){}
+        ~MilkyBar(){ std::cout<<"MilkyBar eaten.\n"; }
 };

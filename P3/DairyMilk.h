@@ -9,4 +9,5 @@
 class DairyMilk : public Chocolate{
     public:
         DairyMilk(bool slab, std::string manufacturer = "Cadbury", double price = 18.95): Chocolate(manufacturer, price, slab){}
+        ~DairyMilk(){ std::cout<<"DairyMilk eaten.\n";}
 };

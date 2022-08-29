@@ -9,4 +9,5 @@
 class DairyMilkBubbly : public AeratedChocolate{
     public:
         DairyMilkBubbly(int bubbles, std::string manufacturer= "Cadbury", double price = 20.49): AeratedChocolate(manufacturer, price, bubbles){}
+        ~DairyMilkBubbly(){ std::cout<<"DairyMilk Bubbly eaten.\n"; }
 };

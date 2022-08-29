@@ -8,5 +8,6 @@
 
 class DairyMilkBubbly : public AeratedChocolate{
     public:
-        DairyMilkBubbly(std::string manufacturer, int bubbles, double price = 20.49): AeratedChocolate(manufacturer, price, bubbles){}
+        DairyMilkBubbly(int bubbles, std::string manufacturer= "Cadbury", double price = 20.49): AeratedChocolate(manufacturer, price, bubbles){}
+        ~DairyMilkBubbly(){ std::cout<<"DairyMilk Bubbly eaten.\n"; }
 };

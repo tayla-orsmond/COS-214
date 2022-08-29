@@ -6,7 +6,6 @@ Nestle::Nestle(){
 //destructor
 Nestle::~Nestle(){
     std::cout<<"Nestle Factory destroyed.\n";
-
 }
 //create chocolate
 Confectionery * Nestle::createChocolate(bool slab){

@@ -12,7 +12,8 @@
 class AeratedChocolate : public Confectionery{
     public:
         AeratedChocolate(std::string, double price, int);//manufacturer, price, bubblespccm
-        std::string getDescription(int);//prints parent + bubblespccm
+        virtual ~AeratedChocolate();
+        std::string getDescription();//prints parent + bubblespccm
         //getters and setters
         int getBubblespccm();
         void setBubblespccm(int);

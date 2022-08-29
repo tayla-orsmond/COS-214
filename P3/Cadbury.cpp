@@ -6,7 +6,6 @@ Cadbury::Cadbury(){
 //destructor
 Cadbury::~Cadbury(){
     std::cout<<"Cadbury Factory destroyed.\n";
-
 }
 //create chocolate
 Confectionery * Cadbury::createChocolate(bool slab){

@@ -10,7 +10,7 @@
 class ConfectioneryFactory{
     public:
         ConfectioneryFactory();
-        ~ConfectioneryFactory();
+        virtual ~ConfectioneryFactory();
         //factoryMethods to be implemented in concrete factories
         virtual Confectionery * createChocolate(bool slab) = 0;
         virtual Confectionery * createAeratedChocolate(int bubblespccm) = 0;

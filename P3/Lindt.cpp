@@ -6,7 +6,6 @@ Lindt::Lindt(){
 //destructor
 Lindt::~Lindt(){
     std::cout<<"Lindt Factory destroyed.\n";
-
 }
 //create chocolate
 Confectionery * Lindt::createChocolate(bool slab){
