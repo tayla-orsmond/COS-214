@@ -5,10 +5,13 @@ Chocolate::Chocolate(std::string manufacturer, double price, bool slab) : Confec
 }
 
 //implements / extends the getDescription method from Confectionery
-std::string Chocolate::getDescription(){
-    std::string s = this->slab ? " slab" : " (not a slab)";
-    this->setType(this->getType() + s);
-    return Confectionery::getDescription();
+std::string Chocolate::getDescription(bool slab){
+    if(slab){
+        return Confectionery::getDescription() + " chocolate slab.";
+    }
+    else{
+        return Confectionery::getDescription() + " chocolate no slab.";
+    }
 }
 
 //getters and setters
