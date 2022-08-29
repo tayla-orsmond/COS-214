@@ -6,12 +6,12 @@ Confectionery::Confectionery(std::string manufacturer, std::string type, double 
     this->manufacturer = manufacturer;
     this->type = type;
     this->price = price;
-    counter++;
+    this->id = counter++;
     std::cout<<"Confectionery created!\n";
 }
 
 Confectionery::~Confectionery(){
-    std::cout << "Confectionery destroyed." << std::endl;
+    std::cout << "\tConfectionery destroyed." << std::endl;
 }
 //return summary of parameters
 std::string Confectionery::getDescription(){

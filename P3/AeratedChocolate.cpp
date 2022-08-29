@@ -5,7 +5,7 @@ AeratedChocolate::AeratedChocolate(std::string manufacturer, double price, int b
 }
 //destructor
 AeratedChocolate::~AeratedChocolate(){
-    std::cout<<"Aerated chocolate eaten.\n";
+    std::cout<<"\tAerated chocolate eaten.\n";
 }
 //implements / extends the getDescription method from Confectionery
 std::string AeratedChocolate::getDescription(){

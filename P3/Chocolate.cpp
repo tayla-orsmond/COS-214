@@ -7,7 +7,7 @@ Chocolate::Chocolate(std::string manufacturer, double price, bool slab) : Confec
 }
 //destructor
 Chocolate::~Chocolate(){
-    std::cout<<"Chocolate eaten.\n";
+    std::cout<<"\tChocolate eaten.\n";
 }
 //implements / extends the getDescription method from Confectionery
 std::string Chocolate::getDescription(){
