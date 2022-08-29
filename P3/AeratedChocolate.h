@@ -11,10 +11,11 @@
 
 class AeratedChocolate : public Confectionery{
     public:
-        AeratedChocolate(std::string, std::string, int);
-        std::string getDescription(int);
+        AeratedChocolate(std::string, double price, int);//manufacturer, price, bubblespccm
+        std::string getDescription(int);//prints parent + bubblespccm
+        //getters and setters
         int getBubblespccm();
         void setBubblespccm(int);
     private:
-        int bubblespccm;
+        int bubblespccm;//bubbles per cubic centimeter
 };

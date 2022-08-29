@@ -1,6 +1,6 @@
 #include "Chocolate.h"
 //constructor
-Chocolate::Chocolate(std::string manufacturer, std::string type, bool slab) : Confectionery(manufacturer, type, 0.0){
+Chocolate::Chocolate(std::string manufacturer, double price, bool slab) : Confectionery(manufacturer, "Chocolate", price){
     this->slab = slab;
 }
 

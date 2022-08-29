@@ -1,9 +1,12 @@
 #include "Confectionery.h"
 //constructor
-Confectionery::Confectionery(std::string manufacturer, std::string type, double){
+int Confectionery::counter = 0;
+
+Confectionery::Confectionery(std::string manufacturer, std::string type, double price){
     this->manufacturer = manufacturer;
     this->type = type;
     this->price = price;
+    counter++;
 }
 
 Confectionery::~Confectionery(){
@@ -11,7 +14,7 @@ Confectionery::~Confectionery(){
 }
 //return summary of parameters
 std::string Confectionery::getDescription(){
-    return manufacturer + ": " + type + ": " + std::to_string(price) + ", ID:  " + std::to_string(id);
+    return "This " + manufacturer + " sweet of type: " + type + " costs: " + std::to_string(price) + ", ID:  " + std::to_string(id);
 }
 
 //getters and setters
@@ -45,4 +48,7 @@ int Confectionery::getId(){
 
 void Confectionery::setId(int id){
     this->id = id;
+}
+int Confectionery::getCount(){
+    return this->counter;
 }

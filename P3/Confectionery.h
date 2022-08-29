@@ -9,9 +9,11 @@
 
 class Confectionery{
     public:
-        Confectionery(std::string, std::string, double);
+        Confectionery(std::string, std::string, double);//manufacturer, type, price
         virtual ~Confectionery();
-        virtual std::string getDescription() = 0;
+        virtual std::string getDescription() = 0;//prints manufacturer, type, price, id
+        //overwritten in derived classes
+        //getters and setters
         double getPrice();
         void setPrice(double);
         std::string getManufacturer();
@@ -20,11 +22,13 @@ class Confectionery{
         void setType(std::string);
         int getId();
         void setId(int);
+        int getCount();//getter for global count
     private:
         std::string manufacturer;
         std::string type;
         int id;
         double price;
+        static int counter;//global counter
 };
 
 

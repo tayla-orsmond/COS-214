@@ -8,5 +8,5 @@
 
 class DairyMilkBubbly : public AeratedChocolate{
     public:
-        DairyMilkBubbly(std::string manufacturer, std::string type, int bubbles): AeratedChocolate(manufacturer, type, bubbles){}
+        DairyMilkBubbly(std::string manufacturer, int bubbles, double price = 20.49): AeratedChocolate(manufacturer, price, bubbles){}
 };

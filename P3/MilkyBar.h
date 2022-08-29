@@ -8,5 +8,5 @@
 
 class MilkyBar : public Chocolate{
     public:
-        MilkyBar(std::string manufacturer, std::string type, bool slab): Chocolate(manufacturer, type, slab){}
+        MilkyBar(std::string manufacturer, bool slab, double price = 33.99): Chocolate(manufacturer, price, slab){}
 };

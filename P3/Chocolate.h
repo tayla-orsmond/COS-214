@@ -11,11 +11,12 @@
 
 class Chocolate : public Confectionery{
     public:
-        Chocolate(std::string, std::string, bool);
+        Chocolate(std::string, double, bool);//manufacturer, price, slab
         ~Chocolate();
-        std::string getDescription(bool);
+        std::string getDescription(bool);//prints parent + if is slab or not
+        //getters and setters
         bool getSlab();
         void setSlab(bool);
     private:
-        bool slab;
+        bool slab;//if is slab or not
 };

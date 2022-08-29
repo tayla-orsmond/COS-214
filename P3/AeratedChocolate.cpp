@@ -1,6 +1,6 @@
 #include "AeratedChocolate.h"
 //constructor
-AeratedChocolate::AeratedChocolate(std::string manufacturer, std::string type, int bubblespccm) : Confectionery(manufacturer, type, 0){
+AeratedChocolate::AeratedChocolate(std::string manufacturer, double price, int bubblespccm) : Confectionery(manufacturer, "Aerated chocolate", price){
     this->bubblespccm = bubblespccm;
 }
 //implements / extends the getDescription method from Confectionery

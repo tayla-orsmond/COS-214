@@ -8,5 +8,5 @@
 
 class Aero : public AeratedChocolate{
     public:
-        Aero(std::string manufacturer, std::string type, int bubbles): AeratedChocolate(manufacturer, type, bubbles){}
+        Aero(std::string manufacturer, int bubbles, double price = 16.99): AeratedChocolate(manufacturer, price, bubbles){}
 };
