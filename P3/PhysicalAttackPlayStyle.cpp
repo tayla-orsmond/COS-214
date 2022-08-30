@@ -11,5 +11,5 @@ PhysicalAttackPlayStyle::~PhysicalAttackPlayStyle(){
 
 //attack
 std::string PhysicalAttackPlayStyle::attack(){
-    return " is using a physical ability to attack";
+    return "is using a physical ability to attack";
 }

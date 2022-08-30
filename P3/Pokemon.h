@@ -7,17 +7,14 @@
 #include <iostream>
 #include "BattleState.h"
 #include "NormalBattleState.h"
-#include "AgileBattleState.h"
 #include "StrongBattleState.h"
+#include "AgileBattleState.h"
 #include "PlayStyle.h"
-#include "RunPlayStyle.h"
-#include "PhysicalAttackPlayStyle.h"
-#include "AttackPlayStyle.h"
 
 class Pokemon{
     public:
-        Pokemon();
-        Pokemon(std::string name, int dmg, int hp, PlayStyle * style);
+        Pokemon(BattleState * state, PlayStyle * style);
+        Pokemon(std::string name, int dmg, int hp, PlayStyle * style, BattleState * state);
         ~Pokemon();
         int SelectBattleState();//returns dmg, calls handle() from BattleState
         int attack();//returns dmg, outputs playstyle and attack (+ new dmg)
@@ -29,8 +26,8 @@ class Pokemon{
         PlayStyle * getStyle();
         void setStyle(PlayStyle * style);
         BattleState * getState();
-        void setState(BattleState * state);
     private:
+        void setState(BattleState * state);
         std::string name;
         int dmg;
         int hp;

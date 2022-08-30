@@ -11,5 +11,5 @@ AttackPlayStyle::~AttackPlayStyle(){
 
 //attack
 std::string AttackPlayStyle::attack(){
-    return " is atttacking the opposing Pokemon";
+    return "is atttacking the opposing Pokemon";
 }

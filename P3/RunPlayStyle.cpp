@@ -9,5 +9,5 @@ RunPlayStyle::~RunPlayStyle(){
 }
 //attack
 std::string RunPlayStyle::attack(){
-    return " decides life is better than death and leaves the battle";
+    return "decides life is better than death and leaves the battle";
 }

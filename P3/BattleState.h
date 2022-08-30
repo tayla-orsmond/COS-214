@@ -6,16 +6,13 @@
 #pragma once
 #include <string>
 #include <iostream>
-#include "Pokemon.h" 
-
-class Pokemon;
 
 class BattleState{
     public:
         BattleState();
         BattleState(std::string);//battleStyle
         virtual ~BattleState();
-        virtual int handle(Pokemon * , std::string) = 0;//name, dmg
+        virtual int handle(std::string, int) = 0;//name, dmg
         //abstract function that returns amended dmg based on battle style
         std::string getBattleStyle();//returns battle style
     protected:

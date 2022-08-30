@@ -5,10 +5,9 @@
 */
 #pragma once
 #include "BattleState.h"
-
 class NormalBattleState : public BattleState{
     public:
         NormalBattleState();
         ~NormalBattleState();
-        int handle(Pokemon * p, std::string);//context, strategy
+        int handle(std::string, int);//name, dmg
 };
