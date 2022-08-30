@@ -7,7 +7,10 @@
 
 class PlayStyle{
     public:
-        PlayStyle();
+        PlayStyle(std::string);//style
         virtual ~PlayStyle();
         virtual std::string attack() = 0;
+        std::string getStyle();//returns strategy name
+    private:
+        std::string style;//strategy name
 };

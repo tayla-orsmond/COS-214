@@ -10,5 +10,5 @@ class AgileBattleState : public BattleState{
     public:
         AgileBattleState();
         ~AgileBattleState();
-        int handle(std::string, int);//name, dmg
+        int handle(Pokemon *, std::string);//context, strategy
 };

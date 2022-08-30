@@ -1,13 +1,13 @@
 #include "RunPlayStyle.h"
 //constructor
-RunPlayStyle::RunPlayStyle(){
-    std::cout << "RunPlayStyle constructor" << std::endl;
+RunPlayStyle::RunPlayStyle(): PlayStyle("run"){
+    std::cout << "\t\t\t\tRunPlayStyle constructor" << std::endl;
 }
 //destructor
 RunPlayStyle::~RunPlayStyle(){
-    std::cout << "RunPlayStyle destructor" << std::endl;
+    std::cout << "\t\t\t\tRunPlayStyle destructor" << std::endl;
 }
 //attack
 std::string RunPlayStyle::attack(){
-    return "decides life is better than death and leaves the battle";
+    return " decides life is better than death and leaves the battle";
 }

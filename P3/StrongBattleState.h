@@ -10,5 +10,5 @@ class StrongBattleState : public BattleState{
     public:
         StrongBattleState();
         ~StrongBattleState();
-        int handle(std::string, int);//name, dmg
+        int handle(Pokemon * p, std::string);//context, strategy
 };

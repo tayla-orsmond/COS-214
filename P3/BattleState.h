@@ -6,16 +6,18 @@
 #pragma once
 #include <string>
 #include <iostream>
-// #include "Pokemon.h" 
-//would typically have this, but battlestate doesn't need to know about pokemon in this implementation (which removes the circular dependency).
+#include "Pokemon.h" 
+
+class Pokemon;
 
 class BattleState{
     public:
         BattleState();
         BattleState(std::string);//battleStyle
         virtual ~BattleState();
-        virtual int handle(std::string, int) = 0;//name, dmg
+        virtual int handle(Pokemon * , std::string) = 0;//name, dmg
         //abstract function that returns amended dmg based on battle style
+        std::string getBattleStyle();//returns battle style
     protected:
         std::string battleStyle;// "normal" or "agile" or "strong"
 };

@@ -1,9 +1,14 @@
 #include "PlayStyle.h"
 //constructor
-PlayStyle::PlayStyle(){
-    std::cout << "PlayStyle constructor" << std::endl;
+PlayStyle::PlayStyle(std::string style){
+    this->style = style;
+    std::cout << "\t\t\t\tPlayStyle constructor" << std::endl;
 }
 //destructor
 PlayStyle::~PlayStyle(){
-    std::cout << "PlayStyle destructor" << std::endl;
+    std::cout << "\t\t\t\tPlayStyle destructor" << std::endl;
+}
+//getters and setters
+std::string PlayStyle::getStyle(){
+    return this->style;
 }

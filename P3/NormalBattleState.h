@@ -10,5 +10,5 @@ class NormalBattleState : public BattleState{
     public:
         NormalBattleState();
         ~NormalBattleState();
-        int handle(std::string, int);//name, dmg
+        int handle(Pokemon * p, std::string);//context, strategy
 };
