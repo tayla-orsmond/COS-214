@@ -1,39 +1,39 @@
 //Tayla Orsmond u21467456
 #include "File.h"
-using namespace std;
+
 File::File(): Node("New File")
 {
     this->contents = "";
-    cout<<this->getName()<<" created"<<endl;
+    std::cout<<this->getName()<<" created"<<std::endl;
 }
 File::File(string name, string contents) : Node(name)
 {
     this->contents = contents;
-    cout<<this->getName()<<" created"<<endl;
+    std::cout<<this->getName()<<" created"<<std::endl;
 }
 File::~File()
 {
-    cout<<"File deleted."<<endl;
+    std::cout<<"File deleted."<<std::endl;
 }
-void File::addFile(File *node)
+void File::addFile(Node *node)
 {
-    cout << "Cannot add a file to a file" << endl;
+    std::cout << "Cannot add a file to a file" << std::endl;
     delete node;
     node = nullptr;
 }
-void File::addDirectory(Directory *node)
+void File::addDirectory(Node *node)
 {
-    cout << "Cannot add a directory to a file" << endl;
+    std::cout << "Cannot add a directory to a file" << std::endl;
     delete node;
     node = nullptr;
 }
 void File::removeFile(std::string name)
 {
-    cout << "Cannot remove a file from a file"<< endl;
+    std::cout << "Cannot remove a file from a file"<< std::endl;
 }
 void File::removeDirectory(std::string name)
 {
-    cout << "Cannot remove a directory from a file" << endl;
+    std::cout << "Cannot remove a directory from a file" << std::endl;
 }
 Node* File::copy()
 {
@@ -45,7 +45,7 @@ bool File::isEmpty()
 }
 bool File::listFiles()
 {
-    cout<<"File: "<<this->getName()<<endl;
+    std::cout<<"File: "<<this->getName()<<std::endl;
     return true;//no files in a file
 }
 bool File::listDirectories()
@@ -62,7 +62,7 @@ void File::showStructure()//depth first traversal
 }
 void File::showContents()//breadth first traversal
 {
-    cout << this->getName() << ": " << this->getContents() << endl;
+    std::cout << this->getName() << ": " << this->getContents() << std::endl;
 }
 //getters and setters
 string File::getContents()

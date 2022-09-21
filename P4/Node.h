@@ -20,8 +20,8 @@ class Node
     public:
         Node(std::string name);
         virtual ~Node();
-        virtual void addFile(File *node) = 0;
-        virtual void addDirectory(Directory *node) = 0;
+        virtual void addFile(Node *node) = 0;
+        virtual void addDirectory(Node *node) = 0;
         virtual void removeFile(std::string fileName) = 0;
         virtual void removeDirectory(std::string directoryName) = 0;
         virtual Node* copy() = 0;

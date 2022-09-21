@@ -11,29 +11,32 @@ NodeIterator::NodeIterator()
 NodeIterator::~NodeIterator()
 {
     //destructor
-    // for(int i = 0; i < this->nodes->size(); i++)
+    // for(int i = 0; i < this->nodes.size(); i++)
     // {
-    //     delete *(this->nodes->begin() + i);
-    //     *(this->nodes->begin() + i) = nullptr;
+    //     delete *(this->nodes.begin() + i);
+    //     *(this->nodes.begin() + i) = nullptr;
     // }
-    // delete this->nodes;
     this->nodes = nullptr;
     this->firstNode = nullptr;
     this->currentNode = nullptr;
 }
-NodeIterator::NodeIterator(vector<Node*> *v)
+NodeIterator::NodeIterator(vector<Node*> v)
 {
-    this->nodes = v;
+    this->nodes = &v;
     this->firstNode = *(nodes->begin());
     this->currentNode = *(nodes->begin());
 }
-NodeIterator::NodeIterator(vector<Node*> *v, Node *firstNode, Node *currentNode)
+NodeIterator::NodeIterator(vector<Node*> v, Node *firstNode, Node *currentNode)
 {
-    this->nodes = v;
+    this->nodes = &v;
     this->firstNode = firstNode;
     this->currentNode = currentNode;
 }
-void NodeIterator::setVector(vector<Node *> *v)
+void NodeIterator::setVector(vector<Node *> v)
 {
-    this->nodes = v;
+    this->nodes = &v;
+}
+vector<Node *>::iterator NodeIterator::at(int i){
+    vector<Node *>::iterator it = this->nodes->begin() + i;
+    return it;
 }

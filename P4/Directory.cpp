@@ -13,13 +13,13 @@ Directory::~Directory()
 {
     cout<<"Directory deleted."<<endl;
 }
-void Directory::addFile(File *file)
+void Directory::addFile(Node *node)
 {
-    files.push_back(file);
+    files.push_back(node);
 }
-void Directory::addDirectory(Directory * directory)
+void Directory::addDirectory(Node * node)
 {
-    directories.push_back(directory);
+    directories.push_back(node);
 }
 void Directory::removeFile(std::string name)
 {
@@ -28,18 +28,20 @@ void Directory::removeFile(std::string name)
         cout<<"No files to remove."<<endl;
         return;
     }
-    FileIterator * it = files->begin()->createIterator();
+    NodeIterator * it = files[0]->createIterator();
     it->setVector(files);
+    int i = 0;
     while(it->hasNext())
     {
         if(it->current()->getName() == name)
         {
             delete it->current();
+            files.erase(it->at(i));
             delete it;
-            files->erase(it->current());
             return;
         }
         it->next();
+        i++;
     }
     delete it;
     cout<<"File not found."<<endl;
@@ -51,18 +53,20 @@ void Directory::removeDirectory(std::string name)
         cout<<"No directories to remove."<<endl;
         return;
     }
-    DirectoryIterator * it = directories->begin()->createIterator();
+    NodeIterator * it = directories[0]->createIterator();
     it->setVector(directories);
+    int i = 0;
     while(it->hasNext())
     {
         if(it->current()->getName() == name)
         {
             delete it->current();
             delete it;
-            directories->erase(it->current());
+            directories.erase(it->at(i));
             return;
         }
         it->next();
+        i++;
     }
     delete it;
     cout << "Directory not found" << endl;
@@ -72,22 +76,22 @@ Node* Directory::copy()
     Directory *newDir = new Directory(this->getName() + " copy");
     if(directories.size() > 0)
     {
-        DirectoryIterator * it = directories->begin()->createIterator();
+        NodeIterator * it = directories[0]->createIterator();
         it->setVector(directories);
         while(it->hasNext())
         {
-            newDir->addDirectory((Directory*)it->current()->copy());
+            newDir->addDirectory(it->current()->copy());
             it->next();
         }
         delete it;
     }
     if(files.size() > 0)
     {
-        FileIterator * it = files->begin()->createIterator();
+        NodeIterator * it = files[0]->createIterator();
         it->setVector(files);
         while(it->hasNext())
         {
-            newDir->addFile((File*)it->current()->copy());
+            newDir->addFile(it->current()->copy());
             it->next();
         }
         delete it;
@@ -105,12 +109,12 @@ bool Directory::listFiles()
         cout << "No files in this directory" << endl;
         return false;
     }
-    FileIterator * it = files->begin()->createIterator();
+    NodeIterator * it = files[0]->createIterator();
     it->setVector(files);
     cout<<"Files in "<<this->getName()<<":"<<endl;
     while(it->hasNext())
     {
-        cout<<it->current()->getName()<<endl;
+        it->current()->listFiles();
         it->next();
     }
     delete it;
@@ -123,12 +127,12 @@ bool Directory::listDirectories()
         cout << "No directories in this directory" << endl;
         return false;
     }
-    DirectoryIterator * it = directories->begin()->createIterator();
+    NodeIterator * it = directories[0]->createIterator();
     it->setVector(directories);
     cout<<"Directories in "<<this->getName()<<":"<<endl;
     while(it->hasNext())
     {
-        cout<<it->current()->getName()<<endl;
+        it->current()->listDirectories();
         it->next();
     }
     delete it;
@@ -143,7 +147,7 @@ void Directory::showStructure()//depth first traversal
     cout << "Directory: " << this->getName() << endl;
     if(directories.size() > 0)
     {
-        DirectoryIterator * it = directories->begin()->createIterator();
+        NodeIterator * it = directories[0]->createIterator();
         it->setVector(directories);
         while(it->hasNext())
         {
@@ -154,7 +158,7 @@ void Directory::showStructure()//depth first traversal
     }
     if(files.size() > 0)
     {
-        FileIterator * it = files->begin()->createIterator();
+        NodeIterator * it = files[0]->createIterator();
         it->setVector(files);
         while(it->hasNext())
         {
@@ -170,19 +174,19 @@ void Directory::showContents()//breadth first traversal
     this->listFiles();
     if(directories.size() > 0)
     {
-        DirectoryIterator * it = directories->begin()->createIterator();
+        NodeIterator * it = directories[0]->createIterator();
         it->setVector(directories);
-        while(it->current() != nullptr){
-            it->next()->listDirectories();
+        while(it->current() != nullptr && it->next()->listDirectories()){
+            
         }
         delete it;
     }
     if(files.size() > 0)
     {
-        FileIterator * it = files->begin()->createIterator();
+        NodeIterator * it = files[0]->createIterator();
         it->setVector(files);
-        while(it->current() != nullptr){
-            it->next()->listFiles();
+        while(it->current() != nullptr && it->next()->listFiles()){
+            
         }
         delete it;
     }

@@ -12,17 +12,15 @@
 #include "FileIterator.h"
 #include <iostream>
 #include <string>
-using namespace std;
 
-class Directory;
 class File : public Node
 {
     public:
         File();
         File(std::string name, std::string contents);
         ~File();
-        void addFile(File *node);
-        void addDirectory(Directory *node);
+        void addFile(Node *node);
+        void addDirectory(Node *node);
         void removeFile(std::string name);
         void removeDirectory(std::string name);
         Node* copy();

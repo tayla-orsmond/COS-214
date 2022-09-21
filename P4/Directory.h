@@ -14,7 +14,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-using namespace std;
 
 class Directory : public Node
 {
