@@ -13,7 +13,7 @@ File::File(string name, string contents) : Node(name)
 }
 File::~File()
 {
-    std::cout<<"File deleted."<<std::endl;
+    std::cout<<this->getName()<<" deleted"<<std::endl;
 }
 void File::addFile(Node *node)
 {
@@ -45,7 +45,7 @@ bool File::isEmpty()
 }
 bool File::listFiles()
 {
-    std::cout<<"File: "<<this->getName()<<std::endl;
+    std::cout<<this->format<<"File: "<<this->getName()<<std::endl;
     return true;//no files in a file
 }
 bool File::listDirectories()
@@ -62,7 +62,7 @@ void File::showStructure()//depth first traversal
 }
 void File::showContents()//breadth first traversal
 {
-    std::cout << this->getName() << ": " << this->getContents() << std::endl;
+    std::cout<<this->format<< this->getName() << ": " << this->getContents() << std::endl;
 }
 //getters and setters
 string File::getContents()

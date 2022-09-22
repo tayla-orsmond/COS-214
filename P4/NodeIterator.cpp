@@ -5,8 +5,6 @@ NodeIterator::NodeIterator()
 {
     //constructor
     this->nodes = nullptr;
-    this->firstNode = nullptr;
-    this->currentNode = nullptr;
 }
 NodeIterator::~NodeIterator()
 {
@@ -17,26 +15,18 @@ NodeIterator::~NodeIterator()
     //     *(this->nodes.begin() + i) = nullptr;
     // }
     this->nodes = nullptr;
-    this->firstNode = nullptr;
-    this->currentNode = nullptr;
 }
-NodeIterator::NodeIterator(vector<Node*> v)
+NodeIterator::NodeIterator(vector<Node*> & v)
 {
     this->nodes = &v;
-    this->firstNode = *(nodes->begin());
-    this->currentNode = *(nodes->begin());
+    this->it = nodes->begin();
 }
-NodeIterator::NodeIterator(vector<Node*> v, Node *firstNode, Node *currentNode)
+void NodeIterator::setVector(vector<Node *> & v)
 {
     this->nodes = &v;
-    this->firstNode = firstNode;
-    this->currentNode = currentNode;
-}
-void NodeIterator::setVector(vector<Node *> v)
-{
-    this->nodes = &v;
+    this->it = nodes->begin();
 }
 vector<Node *>::iterator NodeIterator::at(int i){
-    vector<Node *>::iterator it = this->nodes->begin() + i;
+    this->it = this->nodes->begin() + i;
     return it;
 }

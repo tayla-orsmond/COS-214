@@ -18,14 +18,9 @@ class FileIterator : public NodeIterator
     public:
         FileIterator();
         ~FileIterator();
-        FileIterator(vector<Node*> files);
-        FileIterator(vector<Node*> files, Node * firstNode, Node * currentNode);
-        void setVector(vector<Node*> files);
+        FileIterator(vector<Node*> & files);
         Node * current();
         Node* next();
         Node* first();
         bool hasNext();
-    private:
-        vector<Node*>::iterator it;
-        vector<Node*> files;
 };

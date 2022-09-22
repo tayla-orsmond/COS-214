@@ -3,36 +3,45 @@
 using namespace std;
 Directory::Directory(): Node("New Directory")
 {
-    cout<<this->getName()<<" created"<<endl;
+    std::cout<<this->getName()<<" created"<<std::endl;
 }
 Directory::Directory(string name) : Node(name)
 {
-    cout<<this->getName()<<" created"<<endl;
+    std::cout<<this->getName()<<" created"<<std::endl;
 }
 Directory::~Directory()
 {
-    cout<<"Directory deleted."<<endl;
+    std::cout<<this->getName()<<" deleted"<<std::endl;
+    for(int i = 0; i < this->files.size(); i++)
+    {
+        delete this->files[i];
+    }
+    for(int i = 0; i < this->directories.size(); i++)
+    {
+        delete this->directories[i];
+    }
 }
 void Directory::addFile(Node *node)
 {
+    node->format += this->format + "\t";
     files.push_back(node);
 }
 void Directory::addDirectory(Node * node)
 {
+    node->format += this->format + "\t";
     directories.push_back(node);
 }
 void Directory::removeFile(std::string name)
 {
     if(files.size() == 0)
     {
-        cout<<"No files to remove."<<endl;
+        std::cout<<"No files to remove."<<std::endl;
         return;
     }
     NodeIterator * it = files[0]->createIterator();
     it->setVector(files);
     int i = 0;
-    while(it->hasNext())
-    {
+    do{
         if(it->current()->getName() == name)
         {
             delete it->current();
@@ -42,34 +51,35 @@ void Directory::removeFile(std::string name)
         }
         it->next();
         i++;
-    }
+    }while(it->hasNext());
+    
     delete it;
-    cout<<"File not found."<<endl;
+    std::cout<<"File not found."<<std::endl;
 }
 void Directory::removeDirectory(std::string name)
 {
     if(directories.size() == 0)
     {
-        cout<<"No directories to remove."<<endl;
+        std::cout<<"No directories to remove."<<std::endl;
         return;
     }
     NodeIterator * it = directories[0]->createIterator();
     it->setVector(directories);
     int i = 0;
-    while(it->hasNext())
-    {
+    do{
         if(it->current()->getName() == name)
         {
             delete it->current();
-            delete it;
             directories.erase(it->at(i));
+            delete it;
             return;
         }
         it->next();
         i++;
-    }
+    }while(it->hasNext());
+
     delete it;
-    cout << "Directory not found" << endl;
+    std::cout << "Directory not found" << std::endl;
 }
 Node* Directory::copy()
 {
@@ -77,23 +87,21 @@ Node* Directory::copy()
     if(directories.size() > 0)
     {
         NodeIterator * it = directories[0]->createIterator();
-        it->setVector(directories);
-        while(it->hasNext())
-        {
+        it->setVector(directories); 
+        do{
             newDir->addDirectory(it->current()->copy());
             it->next();
-        }
+        }while(it->hasNext());
         delete it;
     }
     if(files.size() > 0)
     {
         NodeIterator * it = files[0]->createIterator();
         it->setVector(files);
-        while(it->hasNext())
-        {
+        do{
             newDir->addFile(it->current()->copy());
             it->next();
-        }
+        }while(it->hasNext());
         delete it;
     }
     return newDir;
@@ -104,39 +112,37 @@ bool Directory::isEmpty()
 }
 bool Directory::listFiles()
 {
-    if (files.size() == 0)
+    std::cout<<this->format<<"Files in "<<this->getName()<<":"<<std::endl;
+    if(files.size() == 0)
     {
-        cout << "No files in this directory" << endl;
-        return false;
+        std::cout<<this->format<< "\tNo files in this directory" << std::endl;
+        return true;
     }
     NodeIterator * it = files[0]->createIterator();
     it->setVector(files);
-    cout<<"Files in "<<this->getName()<<":"<<endl;
-    while(it->hasNext())
-    {
-        it->current()->listFiles();
+    do{
+        std::cout<<this->format<<"\t"<<it->current()->getName()<<std::endl;
         it->next();
-    }
+    }while(it->hasNext());
     delete it;
-    return true;
+    return false;
 }
 bool Directory::listDirectories()
 {
-    if (directories.size() == 0)
+    std::cout<<this->format<<"Directories in "<<this->getName()<<":"<<std::endl;
+    if(directories.size() == 0)
     {
-        cout << "No directories in this directory" << endl;
-        return false;
+        std::cout<<this->format<< "\tNo directories in this directory" << std::endl;
+        return true;
     }
-    NodeIterator * it = directories[0]->createIterator();
+    NodeIterator * it = this->createIterator();
     it->setVector(directories);
-    cout<<"Directories in "<<this->getName()<<":"<<endl;
-    while(it->hasNext())
-    {
-        it->current()->listDirectories();
+    do{
+        std::cout<<this->format<<"\t"<<it->current()->getName()<<std::endl;
         it->next();
-    }
+    }while(it->hasNext());
     delete it;
-    return true;
+    return false;
 }
 NodeIterator * Directory::createIterator()
 {
@@ -144,50 +150,50 @@ NodeIterator * Directory::createIterator()
 }
 void Directory::showStructure()//depth first traversal
 {
-    cout << "Directory: " << this->getName() << endl;
     if(directories.size() > 0)
     {
-        NodeIterator * it = directories[0]->createIterator();
+        NodeIterator * it = this->createIterator();
         it->setVector(directories);
-        while(it->hasNext())
-        {
+        do{
             it->current()->showStructure();
             it->next();
-        }
+        }while(it->hasNext());
         delete it;
     }
     if(files.size() > 0)
     {
         NodeIterator * it = files[0]->createIterator();
         it->setVector(files);
-        while(it->hasNext())
-        {
+        do{
             it->current()->showStructure();
             it->next();
-        }
+        }while(it->hasNext());
         delete it;
     }
+    std::cout<<this->format<< "Directory: " << this->getName() << std::endl;
 }
 void Directory::showContents()//breadth first traversal
 {
-    this->listDirectories();
     this->listFiles();
-    if(directories.size() > 0)
-    {
-        NodeIterator * it = directories[0]->createIterator();
-        it->setVector(directories);
-        while(it->current() != nullptr && it->next()->listDirectories()){
-            
-        }
-        delete it;
-    }
     if(files.size() > 0)
     {
         NodeIterator * it = files[0]->createIterator();
         it->setVector(files);
-        while(it->current() != nullptr && it->next()->listFiles()){
-            
-        }
+        do{
+            it->current()->showContents();
+            it->next();
+        }while(it->hasNext());
+        delete it;
+    }
+    this->listDirectories();
+    if(directories.size() > 0)
+    {
+        NodeIterator * it = directories[0]->createIterator();
+        it->setVector(directories);
+        do{
+            it->current()->showContents();
+            it->next();
+        }while(it->hasNext());
         delete it;
     }
 }

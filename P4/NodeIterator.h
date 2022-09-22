@@ -16,9 +16,8 @@ class NodeIterator
 {   
     public:
         NodeIterator();
-        NodeIterator(vector<Node *> v);
-        NodeIterator(vector<Node*> v, Node *firstNode, Node *currentNode);
-        void setVector(vector<Node *> v);
+        NodeIterator(vector<Node *> & v);
+        void setVector(vector<Node *> & v);
         vector<Node*>::iterator at(int i);
         virtual ~NodeIterator();
         virtual bool hasNext() = 0;
@@ -26,9 +25,8 @@ class NodeIterator
         virtual Node* first() = 0;
         virtual Node* current() = 0;
     protected:
-        Node * firstNode;
-        Node * currentNode;
         vector<Node *> * nodes;
+        vector<Node*>::iterator it;
     private:
         friend class Node;
 };

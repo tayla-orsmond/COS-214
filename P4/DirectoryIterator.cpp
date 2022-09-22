@@ -8,13 +8,9 @@ DirectoryIterator::~DirectoryIterator()
 {
     
 }
-DirectoryIterator::DirectoryIterator(vector<Node*> directories):NodeIterator(directories)
+DirectoryIterator::DirectoryIterator(vector<Node*> & directories):NodeIterator(directories)
 {
-    this->it = nodes->begin();
-}
-DirectoryIterator::DirectoryIterator(vector<Node*> directories, Node * firstNode, Node * currentNode) : NodeIterator(directories, firstNode, currentNode)
-{
-    this->it = nodes->begin();
+
 }
 Node * DirectoryIterator::current()
 {

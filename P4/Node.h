@@ -33,7 +33,8 @@ class Node
         virtual void showContents() = 0;//breadth first traversal
         //getters and setters
         std::string getName();
-        void setName(std::string name);  
+        void setName(std::string name);
+        std::string format; 
     private:
         std::string name;
         friend class NodeIterator;

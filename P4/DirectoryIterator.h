@@ -13,12 +13,9 @@ class DirectoryIterator : public NodeIterator
     public:
         DirectoryIterator();
         ~DirectoryIterator();
-        DirectoryIterator(vector<Node*> directories);
-        DirectoryIterator(vector<Node*> directories, Node * firstNode, Node * currentNode);
+        DirectoryIterator(vector<Node*> & directories);
         Node * current();
         Node* next();
         Node* first();
         bool hasNext();
-    private:
-        vector<Node*>::iterator it;
 };
