@@ -38,6 +38,14 @@ int main(){
     root->showStructure();
     cout<<"Contents:"<<endl;
     root->showContents();
+    cout<<"Making copy of root..."<<endl;
+    Node * rootCopy = root->copy();
+    cout<<"Removing dir2..."<<endl;
+    rootCopy->removeDirectory("dir2 copy");
+    cout<<"Structure:"<<endl;
+    rootCopy->showStructure();
+    cout<<"Contents:"<<endl;
+    rootCopy->showContents();
     delete root;
     return 0;
 }
