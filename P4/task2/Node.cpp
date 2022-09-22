@@ -1,18 +1,17 @@
 //Tayla Orsmond
 #include "Node.h"
-using namespace std;
-Node::Node(string name)
+Node::Node(std::string name)
 {
     this->name = name;
 }
 Node::~Node()
 {
 }
-string Node::getName()
+std::string Node::getName()
 {
     return name;
 }
-void Node::setName(string name)
+void Node::setName(std::string name)
 {
     if(name == "")
         return;

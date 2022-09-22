@@ -10,7 +10,6 @@
 //The node has a showStructure() and a showContents() method
 #pragma once
 #include <string>
-using namespace std;
 class File;
 class Folder;
 
@@ -32,6 +31,5 @@ class Node
         std::string format; 
     private:
         std::string name;
-        friend class NodeIterator;
 };
 
