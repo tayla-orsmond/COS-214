@@ -3,15 +3,15 @@
 using namespace std;
 Directory::Directory(): Node("New Directory")
 {
-    // std::cout<<this->getName()<<" created"<<std::endl;
+    std::cout<<this->getName()<<" created"<<std::endl;
 }
 Directory::Directory(string name) : Node(name)
 {
-    // std::cout<<this->getName()<<" created"<<std::endl;
+    std::cout<<this->getName()<<" created"<<std::endl;
 }
 Directory::~Directory()
 {
-    // std::cout<<this->getName()<<" deleted"<<std::endl;
+    std::cout<<this->getName()<<" deleted"<<std::endl;
     for(int i = 0; i < this->files.size(); i++)
     {
         delete this->files[i];

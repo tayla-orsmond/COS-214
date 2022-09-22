@@ -61,6 +61,3 @@ void Root::showStructure(){
 void Root::showContents(){
     root->showContents();
 }
-void Root::protect(Observer * observer){
-    root->attatch(observer);
-}

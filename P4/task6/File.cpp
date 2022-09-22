@@ -3,17 +3,17 @@
 
 File::File(): Node("New File")
 {
-    this->contents = "New File Contents";
-    // std::cout<<this->getName()<<" created"<<std::endl;
+    this->contents = "";
+    std::cout<<this->getName()<<" created"<<std::endl;
 }
 File::File(string name, string contents) : Node(name)
 {
     this->contents = contents;
-    // std::cout<<this->getName()<<" created"<<std::endl;
+    std::cout<<this->getName()<<" created"<<std::endl;
 }
 File::~File()
 {
-    // std::cout<<this->getName()<<" deleted"<<std::endl;
+    std::cout<<this->getName()<<" deleted"<<std::endl;
 }
 void File::addFile(Node *node)
 {

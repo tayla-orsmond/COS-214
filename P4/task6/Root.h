@@ -30,7 +30,6 @@ class Root: public Directory{
         NodeIterator * createIterator();
         void showStructure();//depth first traversal
         void showContents();//breadth first traversal
-        void protect(Observer * observer);
     private:
         vector<Node *> snaps;
         Node * root;
