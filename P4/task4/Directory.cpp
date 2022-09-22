@@ -84,6 +84,7 @@ void Directory::removeDirectory(std::string name)
 Node* Directory::copy()
 {
     Directory *newDir = new Directory(this->getName() + " copy");
+    newDir->format = this->format;
     if(directories.size() > 0)
     {
         NodeIterator * it = directories[0]->createIterator();

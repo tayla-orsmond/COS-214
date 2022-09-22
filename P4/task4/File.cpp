@@ -37,7 +37,9 @@ void File::removeDirectory(std::string name)
 }
 Node* File::copy()
 {
-    return new File(this->getName() + " copy", this->getContents());
+    Node * copy = new File(this->getName(), this->contents);
+    copy->format = this->format;
+    return copy;
 }
 bool File::isEmpty()
 {
