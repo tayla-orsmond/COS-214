@@ -20,7 +20,7 @@ class Directory : public Node
     public:
         Directory();
         Directory(std::string name);
-        ~Directory();
+        virtual ~Directory();
         void addFile(Node *node);
         void addDirectory(Node *node);
         void removeFile(std::string name);

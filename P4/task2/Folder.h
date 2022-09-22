@@ -7,7 +7,7 @@
 //The Folder has a showContents() method
 //The Folder has a copy() method
 //The Folder has an isEmpty() method
-
+#pragma once 
 #include "Node.h"
 #include <iostream>
 #include <string>
