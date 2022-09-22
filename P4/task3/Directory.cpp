@@ -112,36 +112,38 @@ bool Directory::isEmpty()
 }
 bool Directory::listFiles()
 {
-    std::cout<<this->format<<"Files in "<<this->getName()<<":"<<std::endl;
+    std::cout<<this->format<<"[Files in "<<this->getName()<<":"<<std::endl;
     if(files.size() == 0)
     {
-        std::cout<<this->format<< "\tNo files in this directory" << std::endl;
+        std::cout<<this->format<< "\tNo files in this directory]" << std::endl;
         return true;
     }
     NodeIterator * it = files[0]->createIterator();
     it->setVector(files);
     do{
-        std::cout<<this->format<<"\t"<<it->current()->getName()<<std::endl;
+        it->current()->listFiles();
         it->next();
     }while(it->hasNext());
     delete it;
+    std::cout<<this->format<<"]"<<std::endl;
     return false;
 }
 bool Directory::listDirectories()
 {
-    std::cout<<this->format<<"Directories in "<<this->getName()<<":"<<std::endl;
+    std::cout<<this->format<<"[Directories in "<<this->getName()<<":"<<std::endl;
     if(directories.size() == 0)
     {
-        std::cout<<this->format<< "\tNo directories in this directory" << std::endl;
+        std::cout<<this->format<< "\tNo directories in this directory]" << std::endl;
         return true;
     }
     NodeIterator * it = this->createIterator();
     it->setVector(directories);
     do{
-        std::cout<<this->format<<"\t"<<it->current()->getName()<<std::endl;
+        std::cout<<this->format<<"> Directory:"<<it->current()->getName()<<std::endl;
         it->next();
     }while(it->hasNext());
     delete it;
+    std::cout<<this->format<<"]"<<std::endl;
     return false;
 }
 NodeIterator * Directory::createIterator()
@@ -150,6 +152,7 @@ NodeIterator * Directory::createIterator()
 }
 void Directory::showStructure()//depth first traversal
 {
+    std::cout<<this->format<< "[Directory: " << this->getName() << std::endl;
     if(directories.size() > 0)
     {
         NodeIterator * it = this->createIterator();
@@ -170,7 +173,7 @@ void Directory::showStructure()//depth first traversal
         }while(it->hasNext());
         delete it;
     }
-    std::cout<<this->format<< "Directory: " << this->getName() << std::endl;
+    std::cout<<this->format<<"]"<<std::endl;
 }
 void Directory::showContents()//breadth first traversal
 {

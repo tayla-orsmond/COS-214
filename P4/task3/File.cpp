@@ -45,7 +45,7 @@ bool File::isEmpty()
 }
 bool File::listFiles()
 {
-    std::cout<<this->format<<"File: "<<this->getName()<<std::endl;
+    std::cout<<this->format<<"> File: "<<this->getName()<<std::endl;
     return true;//no files in a file
 }
 bool File::listDirectories()
@@ -62,7 +62,7 @@ void File::showStructure()//depth first traversal
 }
 void File::showContents()//breadth first traversal
 {
-    std::cout<<this->format<< this->getName() << ": " << this->getContents() << std::endl;
+    std::cout<<this->format<<">"<<this->getName() << " :\"" << this->getContents() <<"\"\n";
 }
 //getters and setters
 string File::getContents()
