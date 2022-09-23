@@ -3,15 +3,15 @@
 using namespace std;
 Directory::Directory(): Node("New Directory")
 {
-    std::cout<<this->getName()<<" created"<<std::endl;
+    // std::cout<<this->getName()<<" created"<<std::endl;
 }
 Directory::Directory(string name) : Node(name)
 {
-    std::cout<<this->getName()<<" created"<<std::endl;
+    // std::cout<<this->getName()<<" created"<<std::endl;
 }
 Directory::~Directory()
 {
-    std::cout<<this->getName()<<" deleted"<<std::endl;
+    // std::cout<<this->getName()<<" deleted"<<std::endl;
     for(int i = 0; i < this->files.size(); i++)
     {
         delete this->files[i];
@@ -209,4 +209,11 @@ void Directory::showContents()//breadth first traversal
 }
 void Directory::setContents(std::string contents)
 {
+}
+//test if node is a file or a directory (creates an iterator with a vector attatched)
+NodeIterator * Directory::createDirectoryIterator(){
+    return new DirectoryIterator(this->directories);
+}
+NodeIterator * Directory::createFileIterator(){
+    return new FileIterator(this->files);
 }

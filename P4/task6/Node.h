@@ -41,6 +41,8 @@ class Node
         virtual bool listFiles() = 0;
         virtual bool listDirectories() = 0;
         virtual NodeIterator * createIterator() = 0;
+        virtual NodeIterator * createDirectoryIterator() = 0;
+        virtual NodeIterator * createFileIterator() = 0;
         virtual void showStructure() = 0;//depth first traversal
         virtual void showContents() = 0;//breadth first traversal
         virtual void setContents(std::string contents) = 0;

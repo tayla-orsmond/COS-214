@@ -11,7 +11,7 @@
 #include <string>
 #include <vector>
 
-class Root: public Directory{
+class Root: public Node{
     public:
         Root();
         Root(std::string name);
@@ -24,12 +24,17 @@ class Root: public Directory{
         void addDirectory(Node *node);
         void removeFile(std::string name);
         void removeDirectory(std::string name);
+        Node* copy();
         bool isEmpty();
         bool listFiles();
         bool listDirectories();
         NodeIterator * createIterator();
+        NodeIterator * createDirectoryIterator();
+        NodeIterator * createFileIterator();
         void showStructure();//depth first traversal
         void showContents();//breadth first traversal
+        void setContents(std::string contents);
+        void protect(Observer * observer);
     private:
         vector<Node *> snaps;
         Node * root;

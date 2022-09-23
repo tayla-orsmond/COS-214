@@ -30,6 +30,8 @@ class Directory : public Node
         bool listFiles();
         bool listDirectories();
         NodeIterator * createIterator();
+        NodeIterator * createDirectoryIterator();
+        NodeIterator * createFileIterator();
         void showStructure();//depth first traversal
         void showContents();//breadth first traversal
         void setContents(std::string contents);

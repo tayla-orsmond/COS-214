@@ -1,14 +1,18 @@
 //Tayla Orsmond u21467456
 #include "Root.h"
 
-Root::Root(){
+Root::Root():Node("Root"){
     root = new Directory("root");
 }
-Root::Root(std::string name){
+Root::Root(std::string name):Node("Root"){
     root = new Directory(name);
 }
 Root::~Root(){
     delete root;
+}
+Node * Root::copy(){
+    this->takeSnapshot();
+    return snaps.back();
 }
 void Root::takeSnapshot(){
     snaps.push_back(root->copy());
@@ -55,9 +59,21 @@ bool Root::listDirectories(){
 NodeIterator * Root::createIterator(){
     return root->createIterator();
 }
+NodeIterator * Root::createDirectoryIterator(){
+    return root->createDirectoryIterator();
+}
+NodeIterator * Root::createFileIterator(){
+    return root->createFileIterator();
+}
 void Root::showStructure(){
     root->showStructure();
 }
 void Root::showContents(){
     root->showContents();
+}
+void Root::setContents(std::string contents){
+    root->setContents(contents);
+}
+void Root::protect(Observer * observer){
+    root->attatch(observer);
 }

@@ -28,6 +28,8 @@ class File : public Node
         bool listFiles();
         bool listDirectories();
         NodeIterator * createIterator();
+        NodeIterator * createDirectoryIterator();
+        NodeIterator * createFileIterator();
         void showStructure();
         void showContents();
         //getters and setters
