@@ -28,9 +28,6 @@ int main(){
     //vs for viewing all snapshots of the root directory
     //ob for observing the current file
     //ex for exiting the program
-    enum commands{cd, nf, nd, rm, ls, ob, nm, ct, cp, sn, rs, cl, vs, ex};
-    cout<<"Welcome to the Linux Terminal Remake!"<<endl;
-    cout<<"Commands: cd [name], \ncd ../, \nnf [name], \nnd [name], \nrm [name], \n./ [name], \nls, \nob [name], \nnm [name], \nct [name], \ncp [name], \nsn, \nrs, \ncl, \nvs, \nex"<<endl;
     Root* root = new Root();//root of file system
     Node * current = root;//pointer up and down
     Observer* obs = new Observer();//observer for the file system
@@ -150,7 +147,10 @@ int main(){
             current->setContents(name);
         }
         else if(command == "cp"){
-            if(typeid(current).name() == "File"){
+            if(typeid(*current) == typeid(Root)){
+                current->copy();
+            }
+            else if(typeid(*current) == typeid(File)){
                 current->getParent()->addFile(current->copy());
             }
             else{
@@ -162,6 +162,7 @@ int main(){
         }
         else if(command == "rs"){
             root->restoreSnapshot();
+            current = root;
         }
         else if(command == "cl"){
             root->clearSnapshots();
@@ -172,7 +173,9 @@ int main(){
         else if(command == "ob"){
             current->attatch(obs);
         }
-
+        else if(command != "ex"){
+            cout<<"Command not found.\n";
+        }
     }while(command != "ex");
     current = nullptr;
     delete root;
