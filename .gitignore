@@ -1,3 +1,7 @@
 *.pdf
 .vscode/
 *.o
+main
+*.out
+*.exe
+*.zip

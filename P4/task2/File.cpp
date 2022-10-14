@@ -1,12 +1,13 @@
 //Tayla Orsmond u21467456
 #include "File.h"
+using namespace std;
 
 File::File(): Node("New File")
 {
     this->contents = "";
     std::cout<<this->getName()<<" created"<<std::endl;
 }
-File::File(string name, string contents) : Node(name)
+File::File( std::string name, std::string contents) : Node(name)
 {
     this->contents = contents;
     std::cout<<this->getName()<<" created"<<std::endl;

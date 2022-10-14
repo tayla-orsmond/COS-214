@@ -1,6 +1,6 @@
 //Tayla Orsmond u21467456
 #include "Folder.h"
-
+using namespace std;
 Folder::Folder(): Node("New Folder")
 {
     std::cout<<this->getName()<<" created"<<std::endl;
